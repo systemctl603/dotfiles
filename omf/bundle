@@ -1,0 +1,6 @@
+package foreign-env
+package https://github.com/sentriz/fish-pipenv
+package nvm
+theme default
+theme lambda
+theme mars
