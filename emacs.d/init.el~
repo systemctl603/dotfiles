@@ -1,0 +1,151 @@
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'use-package)
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+(add-to-list 'load-path "~/.emacs.d/elisp")
+
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+(setq lsp-idle-delay 0.15)
+(setq lsp-completion-provider :capf)
+(setq lsp-prefer-flymake :none)
+(setq lsp-completion-enable t)
+(setq lsp-auto-configure t)
+(setq lsp-semantic-highlighting t)
+(setq lsp-ui-doc-enable t)
+(setq lsp-ui-doc-delay 0)
+(setq lsp-prefer-flymake nil)
+(setq set-fringe-mode 0)
+(setq doom-modeline-height 40)
+(setq inhibit-startup-message t)
+(setq lsp-pyright-use-library-code-for-types t)
+(setq auto-save-file-name-transforms
+  `((".*" "~/.emacs.d/saves/" t)))
+
+(setq straight-use-package-by-default t)
+(setq company-idle-delay 0.1)
+(setq company-minimum-prefix-length 0)
+
+(set-display-table-slot standard-display-table 0 ?\… )
+(fringe-mode 0)
+
+(defun open-config ()
+  (interactive)
+  (dired "~/.emacs.d"))
+
+(defun launch-separate-emacs-in-terminal ()
+  (suspend-emacs "fg ; emacs -nw"))
+
+(defun launch-separate-emacs-under-x ()
+  (call-process "sh" nil nil nil "-c" "emacs &"))
+
+(defun restart-emacs ()
+  (interactive)
+  ;; We need the new emacs to be spawned after all kill-emacs-hooks
+  ;; have been processed and there is nothing interesting left
+  (let ((kill-emacs-hook (append kill-emacs-hook (list (if (display-graphic-p)
+                                                           #'launch-separate-emacs-under-x
+                                                         #'launch-separate-emacs-in-terminal)))))
+  (save-buffers-kill-emacs)))
+
+(use-package evil
+  :defer 1
+  :init (evil-mode))
+(use-package ivy
+  :defer 1
+  :init (ivy-mode))
+(use-package atom-one-dark-theme
+  :config (load-theme 'atom-one-dark t))
+(use-package doom-modeline
+  :init (doom-modeline-mode 1))
+(use-package lsp-python-ms
+  :init (setq lsp-python-ms-auto-install-server t)
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-python-ms)
+                          (lsp))))  ; or lsp-deferred
+
+(defun init-treemacs ()
+
+  (dolist (face '(treemacs-root-face
+                    treemacs-git-unmodified-face
+                    treemacs-git-modified-face
+                    treemacs-git-renamed-face
+                    treemacs-git-ignored-face
+                    treemacs-git-untracked-face
+                    treemacs-git-added-face
+                    treemacs-git-conflict-face
+                    treemacs-directory-face
+                    treemacs-directory-collapsed-face
+                    treemacs-file-face
+                    treemacs-tags-face))
+    (set-face-attribute face nil :weight 'semi-light :family "Noto Sans TC" :height 100))
+    (load-library "treemacs-theme/theme"))
+
+(use-package treemacs
+  :commands treemacs
+  :config (init-treemacs))
+ (use-package treemacs-evil
+   :after (treemacs))
+(use-package lsp-mode
+  :hook
+  ((rjsx-mode . lsp)
+   (typescript-mode . lsp)))
+(use-package lsp-ui
+  :defer 2)
+(use-package company
+  :after lsp-mode)
+
+(use-package rjsx-mode
+  :mode ("\\.jsx?$"))
+(use-package typescript-mode
+  :mode ("\\.tsx?$"))
+(use-package all-the-icons
+  :config (setq all-the-icons-scale-factor 1.0))
+(use-package flycheck
+  :after lsp-ui)
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+(set-face-attribute 'default nil
+                    :family "Victor Mono"
+		    :height 140
+                    :weight 'semi-bold
+                    :width 'normal)
+
+(electric-pair-mode t)
+(treemacs-resize-icons 16)
+(set-default 'truncate-lines t)
+(add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode t)))
+
+(evil-define-key nil evil-normal-state-map (kbd "-") #'treemacs)
+(evil-define-key 'treemacs treemacs-mode-map (kbd "-") #'treemacs)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(lsp-ui-doc-position 'at-point)
+ '(lsp-ui-imenu-enable t)
+ '(lsp-ui-peek-enable t)
+ '(lsp-ui-sideline-enable nil)
+ '(markdown-command "pandoc"))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

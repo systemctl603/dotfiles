@@ -1,0 +1,149 @@
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
+
+;; (straight-use-package
+;;  	'(tree-sitter :host github
+;;                :repo "ubolonton/emacs-tree-sitter"
+;;                :files ("lisp/*.el")))
+
+;; (straight-use-package
+;; 	'(tree-sitter-langs :host github
+;;                      :repo "ubolonton/emacs-tree-sitter"
+;;                      :files ("langs/*.el" "langs/queries")))
+
+;; (global-tree-sitter-mode)
+;; (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+
+(defun projectile-add-project-types ()
+  (projectile-register-project-type 'npm '("package.json")
+                :project-file "package.json"
+		:compile "npm install"
+		:test-suffix ".spec"))
+
+(use-package evil
+  :defer 2
+  :init
+    (evil-mode t)
+    (evil-define-key 'treemacs treemacs-mode-map (kbd "-") #'treemacs)
+    (evil-define-key 'normal 'global (kbd "-") #'treemacs))
+
+(use-package )
+
+(use-package monokai-pro-theme
+  :defer t)
+
+(use-package exec-path-from-shell)
+(use-package projectile
+  :config
+    (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+    (projectile-mode +1)
+    (projectile-add-project-types))
+
+
+;; Format all
+(use-package format-all
+  :defer t)
+
+(use-package atom-one-dark-theme
+  :init (load-theme 'atom-one-dark t))
+(use-package ivy
+  :defer 1
+  :init (ivy-mode t))
+(use-package doom-modeline
+  :init (doom-modeline-mode t))
+
+;; vterm module
+(use-package vterm
+    :defer 2)
+
+;; Function to set treemacs font and load custom theme
+(defun init-treemacs ()
+  (dolist (face '(treemacs-root-face
+                    treemacs-git-unmodified-face
+                    treemacs-git-modified-face
+                    treemacs-git-renamed-face
+                    treemacs-git-ignored-face
+                    treemacs-git-untracked-face
+                    treemacs-git-added-face
+                    treemacs-git-conflict-face
+                    treemacs-directory-face
+                    treemacs-directory-collapsed-face
+                    treemacs-file-face
+                    treemacs-tags-face))
+    (set-face-attribute face nil :weight 'semi-light :family "Noto Sans TC" :height 100))
+    (load-library "treemacs-theme/theme"))
+
+;; Treemacs and evil bindings
+(use-package treemacs
+  :commands treemacs
+  :config (init-treemacs))
+(use-package treemacs-projectile
+  :after treemacs)
+
+(use-package treemacs-evil
+  :after (treemacs))
+
+;; Langage server related extensions
+(defun lsp-setup ()
+  (add-hook 'before-save-hook #'format-all-buffer nil t)
+  (lsp-deferred))
+
+(use-package lsp-mode
+  :hook (
+	 ((
+	   rjsx-mode
+	   web-mode
+	   python-mode
+	 ) . lsp-setup)))
+(use-package lsp-ui
+  :after lsp-mode)
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
+  :config
+     (setq lsp-ui-doc-enable t
+     lsp-enable-completion-at-point t
+     lsp-ui-doc-position 'at-point
+     lsp-ui-doc-header nil
+     lsp-ui-doc-include-signature t
+     lsp-ui-sideline-enable nil))
+;; Auto completion and flycheck
+(use-package company
+  :after lsp-ui)
+(use-package flycheck
+  :after lsp-ui)
+
+(use-package lsp-python-ms
+  :defer 3
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-python-ms)
+                          (lsp))))  ; or lsp-deferred
+
+;; Starup profiling
+(use-package esup
+  :commands esup)
+
+;; Languages
+(use-package rjsx-mode
+  :mode "\\.jsx?$")
+(use-package web-mode
+  :mode ("\\.tsx?$"))
+
+;; Aesthetics
+(use-package all-the-icons
+  :config (setq all-the-icons-scale-factor 1.0))
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
