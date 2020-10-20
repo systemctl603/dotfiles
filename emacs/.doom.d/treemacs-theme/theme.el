@@ -6,17 +6,19 @@
                                       (propertize "\t" 'face `((:family ,treemacs-all-the-icons-tab-font)))
                                     "\t"))
 
+
 (treemacs-modify-theme "Default"
-  :icon-directory "/home/arjun/.emacs.d/elisp/treemacs-theme/icons"
+  :icon-directory "/home/arjun/.doom.d/treemacs-theme/icons"
   :config
   (progn
     (treemacs-create-icon
      :icon (format "%s%s%s" treemacs-all-the-icons-tab (all-the-icons-octicon "repo"
-		       :height 1.2
-		       :v-adjust -0.1
-		       :face 'treemacs-all-the-icons-root-face)
-		   treemacs-all-the-icons-tab)
+                       :height 1.2
+                       :v-adjust -0.1
+                       :face 'treemacs-all-the-icons-root-face)
+                   treemacs-all-the-icons-tab)
      :extensions (root))
+
 (treemacs-create-icon :file "html.png" :extensions ("htm" "xhtml" "html_vm" "asp"))
 (treemacs-create-icon :file "pug.png" :extensions (".pug-lintrc" ".pug-lintrc.js" ".pug-lintrc.json"))
 (treemacs-create-icon :file "markdown.png" :extensions ("md" "markdown" "rst"))
@@ -27,7 +29,7 @@
 (treemacs-create-icon :file "json.png" :extensions (".jscsrc" ".jshintrc" "composer.lock" ".jsbeautifyrc" ".esformatter" "cdp.pid" ".mjmlconfig" "json"))
 (treemacs-create-icon :file "jinja.png" :extensions ("jinja" "jinja2" "j2" "jinja-html"))
 (treemacs-create-icon :file "sublime.png" :extensions ("sublime-project" "sublime-workspace"))
-(treemacs-create-icon :file "yaml.png" :extensions ("yaml" "YAML-tmLanguage" "yml"))
+(treemacs-create-icon :file "yaml.png" :extensions ("yaml" "YAML-tmLanguage" "yml" ".metadata" ".packages"))
 (treemacs-create-icon :file "xml.png" :extensions (".htaccess"))
 (treemacs-create-icon :file "javascript.png" :extensions ("js" "esx" "mjs"))
 (treemacs-create-icon :file "react.png" :extensions ("jsx" "tsx"))

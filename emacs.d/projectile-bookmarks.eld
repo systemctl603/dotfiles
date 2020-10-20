@@ -1,1 +1,0 @@
-("~/Dotfiles/" "~/Programs/WhiteHatJR/barter-app/" "~/.cache/typescript/4.0/node_modules/@types/react-native/" "~/Dotfiles/emacs.d/straight/repos/all-the-icons.el/" "~/Programs/flask-todo/" "~/Programs/todo-app/" "~/" "~/Programs/WhiteHatJR/Projects/barter-app/" "~/Dotfiles/emacs.d/straight/repos/treemacs/")
