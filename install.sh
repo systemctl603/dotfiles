@@ -8,7 +8,8 @@ fi
 
 while true
 do
-	read -p "This will overwrite files in ~. Are you sure you want to do this (Y/n)? " stowOrNot
+	echo "This will overwrite files in ~. Are you sure you want to do this (Y/n)? "	 
+	read stowOrNot
 	case $stowOrNot in
 		Y | y ) break ;;
 		n ) exit ;;

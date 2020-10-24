@@ -4,7 +4,7 @@ Dotfiles that I use, along with an install.sh script to set them up automaticall
 
 ## Installation
 
-For a oneline install, Run this:
+For a oneline install, Run this: \
 `curl "https://raw.githubusercontent.com/systemctl603/dotfiles/master/install.sh" | bash`
 
 To install manually:
