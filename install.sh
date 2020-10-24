@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ ! -d "~/.dotfiles" ]
+if [ ! -d ~/.dotfiles ]
 then
 	 echo "Installing dotfiles..."
 	 git clone https://github.com/systemctl603/dotfiles.git ~/.dotfiles
@@ -18,10 +18,11 @@ done
 
 
 echo "Symlinking dotfiles"
-stow npm
-stow omf
+stow -t ~ npm
+stow -t ~ omf
+stow -t ~ binaries
 
-if [ ! -d "~/.emacs.d" ] && [ ! -d "emacs/.emacs.d" ]
+if [ ! -d ~/.emacs.d ] && [ ! -d emacs/.emacs.d ]
 then
 	echo "Installing doom..."
 
@@ -29,13 +30,13 @@ then
 	~/.emacs.d/bin/doom install
 
 	rm -rf ~/.doom.d
-	stow emacs
+	stow -t ~ emacs
 	~/.emacs.d/bin/doom sync
-elif [ "~/.emacs.d" ] && [ ! -d "emacs/.emacs.d" ]
+elif [ -d ~/.emacs.d ] && [ ! -d emacs/.emacs.d ]
 then
-	 stow emacs
+	 stow -t ~ emacs
 	~/.emacs.d/bin/doom sync
 else
-	stow emacs
+	stow -t ~ emacs
 fi
 
