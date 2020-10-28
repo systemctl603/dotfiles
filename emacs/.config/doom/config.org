@@ -34,9 +34,11 @@ Set the font to Victor Mono and Noto Sans TC.
 Load the =atom-one-dark= theme.
 #+BEGIN_SRC elisp
 (setq doom-theme 'atom-one-dark)
+#+END_SRC
 
+Configure =org= to use the =doom= directory for storing org files.
+#+BEGIN_SRC elisp
 (setq org-directory (concat doom-private-dir "org/"))
-
 #+END_SRC
 
 
