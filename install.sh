@@ -23,20 +23,19 @@ stow -t ~ npm
 stow -t ~ omf
 stow -t ~ binaries
 
-if [ ! -d ~/.emacs.d ] && [ ! -d emacs/.emacs.d ]
+if [ ! -d ~/.config/emacs ] && [ ! -d emacs/.config/emacs ]
 then
 	echo "Installing doom..."
 
-	git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
-	~/.emacs.d/bin/doom install
-
+	git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.config/emacs
 	rm -rf ~/.doom.d
 	stow -t ~ emacs
-	~/.emacs.d/bin/doom sync
-elif [ -d ~/.emacs.d ] && [ ! -d emacs/.emacs.d ]
+	~/.config/emacs/bin/doom sync
+	~/.config/emacs/bin/doom env
+elif [ -d ~/.config/emacs ] && [ ! -d emacs/.config/emacs ]
 then
 	 stow -t ~ emacs
-	~/.emacs.d/bin/doom sync
+	~/.config/emacs/bin/doom sync
 else
 	stow -t ~ emacs
 fi
