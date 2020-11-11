@@ -4,23 +4,7 @@
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
-;; Configures `straight.el' to check for packages only when saved in emacs
-;; WARN: Speeds up startup time, but modification of packages must be done within emacs.
-(setq straight-check-for-modifications 'live)
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el"
-			 user-emacs-directory)) 
-      (bootstrap-version 5)) 
-  (unless (file-exists-p bootstrap-file) 
-    (with-current-buffer
-	(url-retrieve-synchronously
-	 "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-	 'silent 'inhibit-cookies) 
-(goto-char (point-max)) 
-(eval-print-last-sexp))) 
-(load bootstrap-file nil 'nomessage)) 
-(straight-use-package 'use-package) 
+(straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
 (use-package 
@@ -62,8 +46,9 @@
 (use-package 
   doom-modeline 
   :config (progn 
-	    (setq doom-modeline-buffer-file-name-style 'file-name)
-	    (display-battery-mode t) 
+	    (setq doom-modeline-buffer-file-name-style 'file-name
+		  doom-modeline-major-mode-icon nil)
+	    (display-battery-mode t)
 	    (doom-modeline-mode t)))
 
 (use-package 
@@ -89,15 +74,24 @@
 (use-package web-mode 
   :mode ("\\.tsx?\\'" "\\.html?\\'" "\\.s?css\\'"))
 
+(use-package dart-mode
+  :defer t)
+
+(use-package lsp-dart
+  :defer t)
+
+(use-package yaml-mode
+  :defer t)
+
 (use-package 
   lsp-mode 
-  :hook ((rjsx-mode) . lsp-deferred))
+  :hook ((rjsx-mode
+	  dart-mode) . lsp-deferred))
 (use-package 
   lsp-ui 
   :after lsp-mode 
   :config (progn 
 	    (setq lsp-ui-doc-enable t) 
-	    (setq lsp-ui-doc-header t)
 	    (setq lsp-ui-doc-include-signature t) 
 	    (setq lsp-ui-doc-alignment 'frame)
 	    (setq lsp-ui-doc-position 'at-point) 
@@ -181,6 +175,9 @@
 (use-package gcmh
   :hook (window-setup . gcmh-mode))
 
+(use-package vterm
+  :commands vterm)
+
 (defun org:add-src-block () 
   "Create a src block in org and enter special edit mode" 
   (interactive)
@@ -207,9 +204,16 @@
 (setq auto-save-file-name-transforms `((".*" "~/.emacs.d/saves/") t)) 
 (setq backup-directory-alist '(("." . "~/.emacs.d/saves")))
 
-(setq scroll-conservatively 101)
+(setq scroll-conservatively 101
+      auto-window-vscroll nil)
 
 (setq-default truncate-lines t)
+
+(defun modeline:enable-icons (_frame)
+  (setq doom-modeline-icon t))
+  
+(add-hook 'after-make-frame-functions 
+          #'modeline:enable-icons)
 
 (add-hook 'window-setup-hook #'electric-pair-mode)
 
@@ -225,10 +229,13 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (add-hook 'after-save-hook (lambda () 
-			     (when (and (string=
-					 (file-name-directory (buffer-file-name))
-					 (expand-file-name user-emacs-directory)) 
-					(equal major-mode 'org-mode)) 
+			     (when (and (or (string=
+					     (file-name-directory (buffer-file-name))
+					     (expand-file-name (buffer-file-name)))
+					    (string-prefix-p
+					     (expand-file-name "~/.dotfiles/emacs")
+					     (file-name-directory (buffer-file-name))))
+					(derived-mode-p 'org-mode)) 
 			       (org-babel-tangle nil (concat (file-name-base
 							      (buffer-file-name))
 							     ".el")

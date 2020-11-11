@@ -16,6 +16,3 @@ To install manually:
 ## Notes
 
 Stow is needed to run the install script.
-
-<!-- TODO: Add two scripts, ({push,pull}_dotfiles), to quickly update the github repo and the local install  -->
-<!-- TODO: Install dependencies automatically with nix -->

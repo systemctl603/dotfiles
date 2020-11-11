@@ -37,23 +37,7 @@ Set and load the custom file.
 *** Packages
 Set up =straight.el= and =use-package=. 
 #+BEGIN_SRC emacs-lisp 
-;; Configures `straight.el' to check for packages only when saved in emacs
-;; WARN: Speeds up startup time, but modification of packages must be done within emacs.
-(setq straight-check-for-modifications 'live)
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el"
-			 user-emacs-directory)) 
-      (bootstrap-version 5)) 
-  (unless (file-exists-p bootstrap-file) 
-    (with-current-buffer
-	(url-retrieve-synchronously
-	 "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-	 'silent 'inhibit-cookies) 
-(goto-char (point-max)) 
-(eval-print-last-sexp))) 
-(load bootstrap-file nil 'nomessage)) 
-(straight-use-package 'use-package) 
+(straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 #+END_SRC 
 
@@ -115,8 +99,9 @@ Configure [[https://github.com/seagle0128/doom-modeline][doom-modeline]] (A fanc
 (use-package 
   doom-modeline 
   :config (progn 
-	    (setq doom-modeline-buffer-file-name-style 'file-name)
-	    (display-battery-mode t) 
+	    (setq doom-modeline-buffer-file-name-style 'file-name
+		  doom-modeline-major-mode-icon nil)
+	    (display-battery-mode t)
 	    (doom-modeline-mode t)))
 #+end_src
 Configure [[https://github.com/Alexander-Miller/treemacs][treemacs]], A tree file explorer with icons.
@@ -158,20 +143,37 @@ Use =web-mode= for typescript as =typescript-mode= offers no =tsx= highlighting.
 (use-package web-mode 
   :mode ("\\.tsx?\\'" "\\.html?\\'" "\\.s?css\\'"))
 #+END_SRC 
+***** Dart
+Use =dart-mode= for syntax and indentation.
+#+BEGIN_SRC emacs-lisp 
+(use-package dart-mode
+  :defer t)
+#+END_SRC
+
+Use =lsp-dart= to get LSP smarts in =dart=.
+#+BEGIN_SRC emacs-lisp 
+(use-package lsp-dart
+  :defer t)
+#+END_SRC
+***** YAML
+Use =yaml-mode= for editing yaml files
+#+BEGIN_SRC emacs-lisp 
+(use-package yaml-mode
+  :defer t)
+#+END_SRC
 **** Programming packages
 ***** Language Server Protocol 
 Install =lsp-mode= and =lsp-ui=. 
-Flycheck is not installed as =flymake= is already good enough, IMO. 
 #+BEGIN_SRC emacs-lisp 
 (use-package 
   lsp-mode 
-  :hook ((rjsx-mode) . lsp-deferred))
+  :hook ((rjsx-mode
+	  dart-mode) . lsp-deferred))
 (use-package 
   lsp-ui 
   :after lsp-mode 
   :config (progn 
 	    (setq lsp-ui-doc-enable t) 
-	    (setq lsp-ui-doc-header t)
 	    (setq lsp-ui-doc-include-signature t) 
 	    (setq lsp-ui-doc-alignment 'frame)
 	    (setq lsp-ui-doc-position 'at-point) 
@@ -287,6 +289,13 @@ Use =gcmh-mode= to automatically adjust the gc thresholds.
 (use-package gcmh
   :hook (window-setup . gcmh-mode))
 #+END_SRC
+***** VTerm
+Install =emacs-libvterm= and defer loading untill
+use of =vterm= command.
+#+BEGIN_SRC emacs-lisp 
+(use-package vterm
+  :commands vterm)
+#+END_SRC
 *** Functions
 This section defines some helper functions.
 
@@ -327,15 +336,25 @@ Place =auto-save= files in a seperate directory.
 (setq backup-directory-alist '(("." . "~/.emacs.d/saves"))) 
 #+END_SRC
 
-Set =scroll-conservatively= for smoother scrolling.
+Customize scrolling to make it smoother and faster
 #+BEGIN_SRC emacs-lisp 
-(setq scroll-conservatively 101) 
+(setq scroll-conservatively 101
+      auto-window-vscroll nil) 
 #+END_SRC 
 
 Truncate long lines by default 
 #+BEGIN_SRC emacs-lisp 
 (setq-default truncate-lines t) 
 #+END_SRC 
+
+Enable =doom-modeline= icons if the daemon is in window mode.
+#+BEGIN_SRC emacs-lisp 
+(defun modeline:enable-icons (_frame)
+  (setq doom-modeline-icon t))
+  
+(add-hook 'after-make-frame-functions 
+          #'modeline:enable-icons)
+#+END_SRC
 
 Start =electric-pair-mode=. 
 #+BEGIN_SRC emacs-lisp 
@@ -364,16 +383,20 @@ Change yes or no questions to y or n.
 (defalias 'yes-or-no-p 'y-or-n-p) 
 #+END_SRC 
 *** Tangling the file
-Tangling is done on save by helper functions, as tangling on startup every time 
-serves only to increase the init time. Any file in =user-emacs-directory= is considered to be a 
-config file and is tangled. If =config.el= is not present, this file will be tangled. All blocks are moved
-to one file. 
+Tangling is done on save by helper functions, as tangling on startup
+every time serves only to increase the init time. Any file in
+=user-emacs-directory= is considered to be a config file and is
+tangled. If =config.el= is not present, this file will be tangled. All
+blocks are moved to one file.
 #+begin_src emacs-lisp 
 (add-hook 'after-save-hook (lambda () 
-			     (when (and (string=
-					 (file-name-directory (buffer-file-name))
-					 (expand-file-name user-emacs-directory)) 
-					(equal major-mode 'org-mode)) 
+			     (when (and (or (string=
+					     (file-name-directory (buffer-file-name))
+					     (expand-file-name (buffer-file-name)))
+					    (string-prefix-p
+					     (expand-file-name "~/.dotfiles/emacs")
+					     (file-name-directory (buffer-file-name))))
+					(derived-mode-p 'org-mode)) 
 			       (org-babel-tangle nil (concat (file-name-base
 							      (buffer-file-name))
 							     ".el")

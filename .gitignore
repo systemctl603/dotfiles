@@ -1,15 +1,19 @@
-/.*
 *.cache*
 *.log
 
-**/auto-save-list/
-**/elpa/
-**/eshell
-**/server/
-**/tramp
-**/straight
-**/saves
-**/recentf
+# Emacs
+/emacs/.emacs.d/auto-save-list/
+/emacs/.emacs.d/.*
+/emacs/.emacs.d/elpa/
+/emacs/.emacs.d/eshell
+/emacs/.emacs.d/server/
+/emacs/.emacs.d/tramp
+/emacs/.emacs.d/straight
+/emacs/.emacs.d/saves
+/emacs/.emacs.d/emacs/.emacs.d/recentf
+/emacs/.emacs.d/.extension
+*~*
+*#*
 
 *.elc
 *.lib
