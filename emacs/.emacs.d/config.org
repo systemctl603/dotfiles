@@ -330,12 +330,6 @@ Restart emacs from a command.
 *** Miscellaneous Configurations
 This section stores other configurations not related to the other sections. 
 
-Place =auto-save= files in a seperate directory. 
-#+BEGIN_SRC emacs-lisp 
-(setq auto-save-file-name-transforms `((".*" "~/.emacs.d/saves/") t)) 
-(setq backup-directory-alist '(("." . "~/.emacs.d/saves"))) 
-#+END_SRC
-
 Customize scrolling to make it smoother and faster
 #+BEGIN_SRC emacs-lisp 
 (setq scroll-conservatively 101

@@ -201,9 +201,6 @@
 							 #'emacs:launch-in-terminal))))) 
     (save-buffers-kill-emacs)))
 
-(setq auto-save-file-name-transforms `((".*" "~/.emacs.d/saves/") t)) 
-(setq backup-directory-alist '(("." . "~/.emacs.d/saves")))
-
 (setq scroll-conservatively 101
       auto-window-vscroll nil)
 

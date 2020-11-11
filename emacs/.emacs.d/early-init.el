@@ -2,6 +2,11 @@
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6)
 
+;; Set this early so even if the config was modified and we error, the
+;; autosaves go to a seperate dir
+(setq auto-save-file-name-transforms `((".*" "~/.emacs.d/saves/") t)) 
+(setq backup-directory-alist '(("." . "~/.emacs.d/saves"))) 
+
 ;; Disable unneeded UI elements.
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
