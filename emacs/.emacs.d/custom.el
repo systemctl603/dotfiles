@@ -5,6 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(js-chain-indent t)
  '(js-indent-level 2)
+ '(js2-highlight-level 2)
  '(standard-indent 2)
  '(tab-width 2))
 (custom-set-faces

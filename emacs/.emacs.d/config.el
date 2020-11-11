@@ -72,6 +72,9 @@
   :defer t)
 
 (use-package web-mode 
+	:config
+	(setq web-mode-content-types-alist
+				'(("jsx" . "\\.js[x]?\\'")))
   :mode ("\\.tsx?\\'" "\\.html?\\'" "\\.s?css\\'"))
 
 (use-package dart-mode
@@ -83,10 +86,13 @@
 (use-package yaml-mode
   :defer t)
 
+(use-package graphql-mode
+	:defer t)
+
 (use-package 
   lsp-mode 
   :hook ((rjsx-mode
-	  dart-mode) . lsp-deferred))
+					dart-mode) . lsp-deferred))
 (use-package 
   lsp-ui 
   :after lsp-mode 
@@ -122,6 +128,11 @@
   :config (progn
 	    (setf (alist-get 'prettier apheleia-formatters)
 		  '("prettier" "--bracket-spacing" "--stdin-filepath" filepath))))
+
+(use-package tree-sitter)
+(use-package tree-sitter-langs
+  :demand t
+	:hook (tree-sitter-after-on-hook . tree-sitter-hl-mode))
 
 (use-package magit 
   :commands magit-status) 

@@ -139,11 +139,15 @@ Use =json-mode= to edit json files
 #+END_SRC 
 ***** Typescript + Web 
 Use =web-mode= for typescript as =typescript-mode= offers no =tsx= highlighting.
+Also enable it for some other modes too.
 #+BEGIN_SRC emacs-lisp 
 (use-package web-mode 
+	:config
+	(setq web-mode-content-types-alist
+				'(("jsx" . "\\.js[x]?\\'")))
   :mode ("\\.tsx?\\'" "\\.html?\\'" "\\.s?css\\'"))
 #+END_SRC 
-***** Dart
+***** Dart + Flutter
 Use =dart-mode= for syntax and indentation.
 #+BEGIN_SRC emacs-lisp 
 (use-package dart-mode
@@ -161,6 +165,12 @@ Use =yaml-mode= for editing yaml files
 (use-package yaml-mode
   :defer t)
 #+END_SRC
+***** GraphQL
+Install graphql support with graphql-mode
+#+BEGIN_SRC emacs-lisp 
+(use-package graphql-mode
+	:defer t)
+#+END_SRC
 **** Programming packages
 ***** Language Server Protocol 
 Install =lsp-mode= and =lsp-ui=. 
@@ -168,7 +178,7 @@ Install =lsp-mode= and =lsp-ui=.
 (use-package 
   lsp-mode 
   :hook ((rjsx-mode
-	  dart-mode) . lsp-deferred))
+					dart-mode) . lsp-deferred))
 (use-package 
   lsp-ui 
   :after lsp-mode 
@@ -214,6 +224,15 @@ Also enable it on save for some modes where it is desired.
   :config (progn
 	    (setf (alist-get 'prettier apheleia-formatters)
 		  '("prettier" "--bracket-spacing" "--stdin-filepath" filepath))))
+#+END_SRC
+***** Treesitter
+Install and enable =treesitter= to have syntax highlighting that
+is fairly quick and accurate.
+#+BEGIN_SRC emacs-lisp 
+(use-package tree-sitter)
+(use-package tree-sitter-langs
+  :demand t
+	:hook (tree-sitter-after-on-hook . tree-sitter-hl-mode))
 #+END_SRC
 **** Version Control (Git) 
 This section is geared toward vc, primarily git. 
