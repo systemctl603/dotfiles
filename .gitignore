@@ -12,6 +12,7 @@
 /emacs/.emacs.d/saves
 /emacs/.emacs.d/emacs/.emacs.d/recentf
 /emacs/.emacs.d/.extension
+/emacs/.emacs.d/eln-cache/**
 *~*
 *#*
 

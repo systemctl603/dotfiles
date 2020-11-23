@@ -45,4 +45,4 @@
 (setq initial-major-mode 'fundamental-mode)
 
 ;; Set the font early as setting it here can have a impact on init time
-(add-to-list 'default-frame-alist '(font . "Victor Mono-15:bold"))
+(add-to-list 'default-frame-alist '(font . "Victor Mono-15:weight=bold:style=ss01"))

@@ -11,9 +11,9 @@ do
     echo "This will overwrite files in ~. Are you sure you want to do this (Y/n)? "	 
     read stowOrNot
     case $stowOrNot in
-	Y | y ) break ;;
-	n ) exit ;;
-	* ) ;;
+				Y | y ) break ;;
+				n ) exit ;;
+				* ) ;;
     esac
 done
 
@@ -23,4 +23,5 @@ stow -t ~ npm
 stow -t ~ omf
 stow -t ~ binaries
 stow -t ~ emacs
+stow -t ~ zsh
 

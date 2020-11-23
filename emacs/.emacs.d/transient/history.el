@@ -3,5 +3,5 @@
  (magit-pull nil)
  (magit-push nil)
  (magit-remote
-  ("-f"))
+	("-f"))
  (magit-stash nil))
