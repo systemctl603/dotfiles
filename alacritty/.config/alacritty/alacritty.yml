@@ -1,0 +1,5 @@
+# Set the font to Victor Mono.
+font:
+  size: 12
+  normal:
+    family: Victor Mono Nerd Font Mono

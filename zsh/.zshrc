@@ -27,18 +27,16 @@ autoload -Uz _zinit
 ### End of Zinit's insitaller chunk
 
 
-zinit light zdharma/fast-syntax-highlighting
+zinit light zsh-users/zsh-syntax-highlightinG
 zinit light zsh-users/zsh-autosuggestions
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
-export LIBGL_ALWAYS_INDIRECT=1
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Configure aliases
 alias emacs="emacsclient -c -a ''"
 alias ls="ls --color=auto"
-export PATH=${HOME}/.local/bin:${HOME}/.local/share/sdk/flutter/bin:$PATH
-if [ -e /home/arjun/.nix-profile/etc/profile.d/nix.sh ]; then . /home/arjun/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+export PATH="/home/arjun/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"

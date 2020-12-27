@@ -16,3 +16,6 @@ To install manually:
 ## Notes
 
 Stow is needed to run the install script.
+
+The polybar theme is from [polybar-themes](https://github.com/adi1090x/polybar-themes)
+by adi1090x.

@@ -20,8 +20,9 @@ done
 
 echo "Symlinking dotfiles"
 stow -t ~ npm
-stow -t ~ omf
-stow -t ~ binaries
-stow -t ~ emacs
 stow -t ~ zsh
+stow -t ~ polybar
+stow -t ~ nixpkgs
+stow -t ~ sxhkd
+stow -t ~ bspwm
 
