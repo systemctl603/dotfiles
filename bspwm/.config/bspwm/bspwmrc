@@ -11,5 +11,5 @@ bspc config window_gap 10
 
 pkill polybar
 ~/.config/polybar/launch.sh --docky
-feh --no-fehbg --bg-scale ~/.local/share/background/bg.jpg
+feh --no-fehbg --bg-scale ~/.local/share/backgrounds/bg.jpg
 

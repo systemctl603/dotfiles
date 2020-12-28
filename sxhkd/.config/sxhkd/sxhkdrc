@@ -29,8 +29,4 @@ super + alt + shift + {h,j,k,l}
     bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
     
 super + shift + p
-    /home/arjun/.dotfiles/polybar/.config/polybar/docky/scripts/launcher.sh &
-
-# Toggle the bar
-super + x
-    polybar-msg cmd {hide, show}; bspc config -m focused bottom_padding $((`bspc config -m focused top_padding` {-, +} 40 ))
+    ~/.config/polybar/docky/scripts/launcher.sh &
