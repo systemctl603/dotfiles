@@ -322,4 +322,7 @@
                 treemacs-tags-face))
   (set-face-attribute face nil :family "Cantarell" :weight 'semi-light :height 100))
 
+(setq treemacs-width 30)
+(setq treemacs-file-event-delay 1000)
+
 (provide 'treemacs-theme)
