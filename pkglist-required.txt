@@ -1,0 +1,7 @@
+rofi
+awesome
+kitty
+picom-ibhagwan-git
+acpi
+pamixer
+brightnessctl

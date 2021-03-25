@@ -26,17 +26,16 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 ### End of Zinit's insitaller chunk
 
-
 zinit light zsh-users/zsh-syntax-highlightinG
 zinit light zsh-users/zsh-autosuggestions
-zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Configure aliases
 alias emacs="emacsclient -c -a ''"
-alias ls="ls --color=auto"
+alias ls="ls -F --color=auto"
 
-export PATH="/home/arjun/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+export PATH="$HOME/.local/bin:$PATH"
+source /usr/share/doc/pkgfile/command-not-found.zsh
+
+eval "$(starship init zsh)"

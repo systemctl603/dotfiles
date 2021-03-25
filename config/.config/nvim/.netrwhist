@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =9
+let g:netrw_dirhist_9='/home/arjun/.config/awesome/themes/default'
+let g:netrw_dirhist_8='/home/arjun/.config/awesome/themes'
+let g:netrw_dirhist_7='/home/arjun/.config/awesome'
+let g:netrw_dirhist_6='/home/arjun/.dotfiles'
+let g:netrw_dirhist_5='/home/arjun/.dotfiles/config/.config'
+let g:netrw_dirhist_4='/home/arjun/.dotfiles/config'
+let g:netrw_dirhist_3='/home/arjun/.dotfiles'
+let g:netrw_dirhist_2='/home/arjun/.config/kitty'
+let g:netrw_dirhist_1='/home/arjun/.config/picom'

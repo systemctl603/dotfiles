@@ -2,17 +2,17 @@
 *.log
 
 # Emacs
-/emacs/.emacs.d/auto-save-list/
-/emacs/.emacs.d/.*
-/emacs/.emacs.d/elpa/
-/emacs/.emacs.d/eshell
-/emacs/.emacs.d/server/
-/emacs/.emacs.d/tramp
-/emacs/.emacs.d/straight
-/emacs/.emacs.d/saves
-/emacs/.emacs.d/emacs/.emacs.d/recentf
-/emacs/.emacs.d/.extension
-/emacs/.emacs.d/eln-cache/**
+**/.emacs.d/auto-save-list/
+**/.emacs.d/.*
+**/.emacs.d/elpa/
+**/.emacs.d/eshell
+**/.emacs.d/server/
+**/.emacs.d/tramp
+**/.emacs.d/straight
+**/.emacs.d/saves
+**/.emacs.d/emacs/.emacs.d/recentf
+**/.emacs.d/.extension
+**/.emacs.d/eln-cache/**
 *~*
 *#*
 

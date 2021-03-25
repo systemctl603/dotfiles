@@ -1,21 +1,24 @@
 # Dotfiles
 
-Dotfiles that I use, along with an install.sh script to set up an environment automatically.
+Dotfiles that I use, along with an `install.sh` script to set up an environment automatically.
 
 ## Installation
 
-Oneline install currently broken.
-~~For a oneline install, Run this: \
-`curl "https://raw.githubusercontent.com/systemctl603/dotfiles/master/install.sh" | bash`~~
+For a oneline install, Run this: \
+`curl "https://raw.githubusercontent.com/systemctl603/dotfiles/master/install.sh" | bash`
 
 To install manually:
 
 - Clone the repo to ~/.dotfiles
-- Run the install.sh
+- Run `install.sh`
 
 ## Notes
 
 Stow is needed to run the install script.
 
-The polybar theme is from [polybar-themes](https://github.com/adi1090x/polybar-themes)
-by adi1090x.
+`pkglist.txt` contains packages which I use. \
+`pkglist_required.txt` contains packages necessary for the dotfiles.
+
+Both contain packages from the AUR, so make sure to install them like: \
+`pikaur -S $(cat pkglist.txt)` \
+where `pikaur` should be replaced with your AUR helper.
